@@ -1,3 +1,5 @@
+import { Comic } from "../interfaces/api-marvel";
+
 interface ComicListProps {
     comics: Comic[];
 }

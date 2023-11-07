@@ -1,6 +1,7 @@
 import { publicKey } from "../api"
 import { useState } from "react";
 import { ComicList } from "./ComicList";
+import { CharacterDataWrapper, ComicDataWrapper } from "../interfaces/api-marvel";
 
 export const SearchCharacter = () => {
 
@@ -63,11 +64,12 @@ export const SearchCharacter = () => {
                 <input type="text" placeholder="Busca un heroe" value={heroName} onChange={e => setHeroName(e.target.value)} />
                 <button type="submit">Buscar</button>
             </form>
-            {hero?.data?.results?.length > 0 && <img alt="imagen heroe" src={hero?.data?.results?.[0].thumbnail?.path + "." + hero?.data?.results?.[0].thumbnail?.extension} />}
+
+            {hero?.data?.results?.length !== undefined && hero?.data?.results?.length > 0 && <img alt="imagen heroe" src={hero?.data?.results?.[0].thumbnail?.path + "." + hero?.data?.results?.[0].thumbnail?.extension} />}
 
             <p>{hero?.data?.results?.[0].description}</p>
 
-            {comic?.data?.results?.length > 0 && <ComicList comics={comic?.data?.results} />}
+            {comic?.data?.results?.length !== undefined && comic?.data?.results?.length > 0 && <ComicList comics={comic?.data?.results} />}
         </>
     );
 }
