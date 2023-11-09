@@ -5,7 +5,6 @@ function App() {
 
   return (
     <>
-      <SearchCharacter></SearchCharacter>
       <HeroesPreferidos></HeroesPreferidos>
     </>
   )
