@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Heroe } from "../interfaces/api-jsonserver";
 
 interface Props {
+    edit: boolean
+    editableHero: Heroe | undefined;
     addHeroeToState: (heroe: Heroe) => void;
 }
 
@@ -14,15 +16,25 @@ export const CreateHero = (props: Props) => {
     const estadoInicial: Formulario = {
         name: ''
     }
+
     const [formulario, setFormulario] = useState<Formulario>(estadoInicial);
 
+    console.log(props.edit);
+    console.log(props.editableHero);
+    
+    if (props.edit && props.editableHero) {
+        setFormulario({ name: props.editableHero.name })
+    }
+    
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormulario({ ...formulario, [name]: value });
     }
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleCreate = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
         event.preventDefault();
+        const { name } = event.currentTarget;
+        console.log(name)
         if (formulario.name === '') {
             alert('el nombre no puede estar vacio');
             return;
@@ -30,6 +42,15 @@ export const CreateHero = (props: Props) => {
 
         createHeroe(formulario);
         setFormulario(estadoInicial);
+    }
+
+    const handleEdit = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        event.preventDefault();
+
+        if (props.edit && props.editableHero) {
+
+        }
+
     }
 
     const createHeroe = (heroe: Formulario) => {
@@ -57,13 +78,14 @@ export const CreateHero = (props: Props) => {
     return (
         <>
             <h2>Formulario de creacion de heroes</h2>
-            <form onSubmit={handleSubmit}>
+            <form >
                 <div>
                     <label>Nombre Heroe :</label>
                     <input type="text" placeholder="nombre heroe" name="name" onChange={handleChange} value={formulario.name}></input>
                 </div>
                 <div>
-                    <button type="submit">Crear Heroe</button>
+                    {!props.edit && <button onClick={handleCreate} type="button">Crear Heroe</button>}
+                    {props.edit && <button onClick={handleEdit} type="button">Confirmar Edicion</button>}
                 </div>
             </form >
         </>

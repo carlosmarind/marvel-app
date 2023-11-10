@@ -5,6 +5,8 @@ import { CreateHero } from "./CreateHero";
 export const HeroesPreferidos = () => {
 
     const [listaHeroes, setListaHeroes] = useState<Heroe[]>([]);
+    const [edit, setEdit] = useState<boolean>(false);
+    const [editableHero, setEditableHero] = useState<Heroe | undefined>(undefined);
 
     useEffect(() => {
         fetch(`http://localhost:3000/heroes`, {
@@ -40,10 +42,14 @@ export const HeroesPreferidos = () => {
     const addHeroeToState = (heroe: Heroe) => {
         setListaHeroes([...listaHeroes, heroe]);
     }
+    const handleEdit = (heroe:Heroe) => {
+        setEditableHero(heroe)
+        setEdit(!edit);
+    }
 
     return (
         <>
-            <CreateHero addHeroeToState={addHeroeToState} />
+            <CreateHero edit={edit} editableHero={editableHero} addHeroeToState={addHeroeToState} />
             <h2>Heroes preferidos</h2>
             <p>Lista de heroes preferidos</p>
             <div>
@@ -62,7 +68,7 @@ export const HeroesPreferidos = () => {
                                     <td>{heroe.id}</td>
                                     <td>{heroe.name}</td>
                                     <td>
-                                        <button >editar</button>
+                                        <button onClick={() => handleEdit(heroe)}>editar</button>
                                         <button onClick={() => deleteheroe(heroe.id)}>borrar</button>
                                     </td>
                                 </tr>
