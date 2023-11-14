@@ -22,7 +22,6 @@ export const HeroesPreferidos = () => {
     }, []);
 
     const deleteheroe = (id: number) => {
-
         fetch(`http://localhost:3000/heroes/${id}`, {
             method: 'DELETE',
         }).then(response => {
@@ -40,16 +39,65 @@ export const HeroesPreferidos = () => {
     }
 
     const addHeroeToState = (heroe: Heroe) => {
-        setListaHeroes([...listaHeroes, heroe]);
+        fetch(`http://localhost:3000/heroes`, {
+            method: 'POST',
+            body: JSON.stringify(heroe),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json() as Promise<Heroe>;
+            } else {
+                throw new Error('algo salio mal al crear el heroe en el backend');
+            }
+        }).then(json => {
+            console.log(json);
+            setListaHeroes([...listaHeroes, json]);
+        }).catch(error => {
+            console.error(error);
+        });
     }
-    const handleEdit = (heroe:Heroe) => {
+
+    const patchHero = (hero: Heroe) => {
+        fetch(`http://localhost:3000/heroes/${hero.id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(hero),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                return response.json() as Promise<Heroe>;
+            } else {
+                throw new Error('algo salio mal al crear el heroe en el backend');
+            }
+        }).then(json => {
+            console.log(json);
+            const newListaHeroes = listaHeroes.map(heroe => {
+                if (heroe.id === json.id) {
+                    return json;
+                } else {
+                    return heroe;
+                }
+            });
+            setListaHeroes(newListaHeroes);
+        }).catch(error => {
+            console.error(error);
+        }).finally(() => {
+            setEditableHero(undefined);
+            setEdit(false);
+        });
+    }
+
+    const handleEdit = (heroe: Heroe) => {
         setEditableHero(heroe)
-        setEdit(!edit);
+        setEdit(true);
     }
 
     return (
         <>
-            <CreateHero edit={edit} editableHero={editableHero} addHeroeToState={addHeroeToState} />
+            <CreateHero edit={edit} editableHero={editableHero} addHeroeToState={addHeroeToState} patchHero={patchHero} />
             <h2>Heroes preferidos</h2>
             <p>Lista de heroes preferidos</p>
             <div>
