@@ -6,17 +6,20 @@ interface ComicListProps {
 
 export const ComicList = (props: ComicListProps) => {
     return (
-        <>
-            <h1>Lista de comics</h1>
+        <div style={{ display: 'flex', gap: '50px', flexDirection: 'column', marginLeft: '50px' }}>
+            <h2>Comics del heroe</h2>
             {props.comics.map((comic, index) => {
                 return (
-                    <div key={index}>
-                        <h2>{comic.title}</h2>
-                        <p>{comic.description}</p>
-                        <img src={`${comic?.thumbnail?.path}.${comic?.thumbnail?.extension}`} alt={comic.title} />
+                    <div key={index} style={{ display: 'flex', gap: '50px' }}>
+                        <img src={`${comic?.thumbnail?.path}.${comic?.thumbnail?.extension
+                            }`} alt={comic.title} style={{ maxWidth: '250px', maxHeight: "250px" }} />
+                        <div>
+                            <h3>{comic.title} <input className="star" type="checkbox" title="comic favorito" /></h3>
+                            <p>{comic.description}</p>
+                        </div>
                     </div>
                 )
             })}
-        </>
+        </div>
     )
 }

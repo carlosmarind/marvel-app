@@ -1,0 +1,42 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "cmd",
+      "name": "carlos",
+      "heroes": [
+        1,
+        2
+      ],
+      "comics": []
+    }
+  ],
+  "heroes": [
+    {
+      "name": "spiderman",
+      "id": 9
+    },
+    {
+      "name": "iron-man",
+      "id": 10
+    },
+    {
+      "name": "teasd",
+      "id": 11
+    },
+    {
+      "name": "cvxcv",
+      "id": 12
+    }
+  ],
+  "comics": [
+    {
+      "name": "Comic n1",
+      "id": 11
+    },
+    {
+      "name": "Comic n2",
+      "id": 12
+    }
+  ]
+}

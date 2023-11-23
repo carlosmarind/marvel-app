@@ -65,11 +65,30 @@ export const SearchCharacter = () => {
                 <button type="submit">Buscar</button>
             </form>
 
-            {hero?.data?.results?.length !== undefined && hero?.data?.results?.length > 0 && <img alt="imagen heroe" src={hero?.data?.results?.[0].thumbnail?.path + "." + hero?.data?.results?.[0].thumbnail?.extension} />}
 
-            <p>{hero?.data?.results?.[0].description}</p>
+            {
+                (hero?.data?.results?.length !== undefined && hero?.data?.results?.length > 0) &&
 
-            {comic?.data?.results?.length !== undefined && comic?.data?.results?.length > 0 && <ComicList comics={comic?.data?.results} />}
+                <div style={{ marginLeft: '50px' }}>
+                    <h2>Descripcion del heroe</h2>
+                    <div style={{ display: 'flex', marginLeft: '50px', gap: '10px' }}>
+                        <img style={{ maxWidth: '350px', maxHeight: '350px' }} alt="imagen heroe" src={hero?.data?.results?.[0].thumbnail?.path + "." + hero?.data?.results?.[0].thumbnail?.extension} />
+                        <div style={{ display: 'flex', flexDirection: 'column', marginTop: '10px' }}>
+                            <div>
+                                <span>nombre: {hero.data?.results?.[0]?.name}</span>
+                                <input type="checkbox" className="star" title="heroe favorito" />
+                            </div>
+                            <p>{hero?.data?.results?.[0]?.description}</p>
+                        </div>
+                    </div>
+                </div >
+            }
+
+            {
+                comic?.data?.results?.length !== undefined && comic?.data?.results?.length > 0 &&
+                <ComicList comics={comic?.data?.results} />
+            }
+
         </>
     );
 }
