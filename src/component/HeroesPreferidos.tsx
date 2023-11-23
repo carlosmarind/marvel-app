@@ -117,7 +117,7 @@ export const HeroesPreferidos = () => {
                                     <td>{heroe.name}</td>
                                     <td>
                                         <button onClick={() => handleEdit(heroe)}>editar</button>
-                                        <button onClick={() => deleteheroe(heroe.id)}>borrar</button>
+                                        <button onClick={() => deleteheroe(heroe.id!)}>borrar</button>
                                     </td>
                                 </tr>
                             )
