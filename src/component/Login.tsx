@@ -5,6 +5,7 @@ import { login, logout } from "../redux/userSlice";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 interface LoginResponse {
@@ -18,7 +19,7 @@ interface LoginResponse {
 }
 
 export const Login = () => {
-
+    const { loginWithRedirect } = useAuth0();
     const navigate = useNavigate();
     const user = useSelector((state: RootState) => state.user)
 
@@ -72,6 +73,7 @@ export const Login = () => {
     }
 
     return (
+        
         <div>
             {!user?.isAuth &&
                 <div>
@@ -89,9 +91,13 @@ export const Login = () => {
                             <button type="submit">Login</button>
                         </div>
                     </form>
+                    <button onClick={() => loginWithRedirect()}>Log In with Auth0</button>
                 </div>
+                 
             }
             {user?.isAuth && <button type="button" onClick={() => dispatch(logout())}>logout</button>}
         </div>
+
+
     )
 }

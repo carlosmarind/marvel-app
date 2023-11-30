@@ -1,26 +1,28 @@
 import React from "react"
 import { RootState } from "../redux/store"
 import { useSelector } from "react-redux"
-import { Navigate, useLocation } from "react-router-dom"
+import { Navigate,  useLocation } from "react-router-dom"
 
 interface Props {
-    children: React.ReactNode
+    children: React.ReactNode,
+    allowedRoles: string[]
 }
 
-export const ProtectedComponent = (props: Props) => {
+export const ProtectedComponent = ({ children, allowedRoles }: Props) => {
 
     const user = useSelector((state: RootState) => state.user)
     const location = useLocation();
-    console.log(user);
-    if (user?.isAuth) {
-        return (
-            <>
-                {props.children}
-            </>
-        )
+
+    //console.log(user);
+    console.log("find", allowedRoles.find((role) => user.role.includes(role)));
+
+    if (allowedRoles.find((role) => user.role.includes(role))) {
+        console.log("true");
     }
-
-    return <Navigate to='/login' state={{ from: location }} replace />
-
-
+    return user?.isAuth && allowedRoles.find((role) => user.role.includes(role)) ?
+        (children) :
+        (<Navigate to='/login' state={{ from: location }} replace />)
 }
+
+
+
