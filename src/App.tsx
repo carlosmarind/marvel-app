@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Login } from './component/Login';
 import { Home } from './component/Home';
 import { ProtectedComponent } from './component/ProtectedRoute';
+import { Callback } from './component/Callback';
 
 function App() {
 
@@ -21,12 +22,13 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='heroes' element={
-          <ProtectedComponent >
+          <ProtectedComponent allowedRoles={["admin", "admin-search", "user-search"]}>
             <SearchCharacter />
           </ProtectedComponent>
         } />
         <Route path='crud' element={<HeroesPreferidos />} />
         <Route path='login' element={<Login />} />
+        <Route path='callback' element={<Callback />} />
       </Routes>
 
 

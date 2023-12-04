@@ -5,6 +5,7 @@ import { login, logout } from "../redux/userSlice";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router";
+import { useAuth0 } from "@auth0/auth0-react";
 
 
 interface LoginResponse {
@@ -21,8 +22,8 @@ export const Login = () => {
 
     const navigate = useNavigate();
     const user = useSelector((state: RootState) => state.user)
-
     const dispatch = useDispatch();
+    const { loginWithRedirect } = useAuth0();
 
     const [form, setForm] = useState({
         username: '',
@@ -75,20 +76,26 @@ export const Login = () => {
         <div>
             {!user?.isAuth &&
                 <div>
-                    <h2>Formularion de ingreso</h2>
-                    <form onSubmit={handleSubmit}>
-                        <label>
-                            <p>Username</p>
-                            <input type="text" name="username" value={form.username} onChange={handleChange} />
-                        </label>
-                        <label>
-                            <p>Password</p>
-                            <input type="password" name="password" value={form.password} onChange={handleChange} />
-                        </label>
-                        <div>
-                            <button type="submit">Login</button>
-                        </div>
-                    </form>
+                    <div>
+                        <h2>Autenticar con backend (base de datos)</h2>
+                        <form onSubmit={handleSubmit}>
+                            <label>
+                                <p>Username</p>
+                                <input type="text" name="username" value={form.username} onChange={handleChange} />
+                            </label>
+                            <label>
+                                <p>Password</p>
+                                <input type="password" name="password" value={form.password} onChange={handleChange} />
+                            </label>
+                            <div>
+                                <button type="submit">Login</button>
+                            </div>
+                        </form>
+                    </div>
+                    <div>
+                        <h3>Autenticar con auth0</h3>
+                        <button type="button" onClick={() => loginWithRedirect()}>Autenticar</button>
+                    </div>
                 </div>
             }
             {user?.isAuth && <button type="button" onClick={() => dispatch(logout())}>logout</button>}
