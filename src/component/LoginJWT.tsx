@@ -4,26 +4,30 @@ import { Md5 } from 'ts-md5';
 import { login, logout } from "../redux/userSlice";
 import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router";
-import { useAuth0 } from "@auth0/auth0-react";
-
+import { jwtDecode } from "jwt-decode";
+import { useNavigate } from "react-router-dom";
 
 interface LoginResponse {
+    status: number;
+    success: boolean;
     message: string;
-    metadata: {
-        isAuthenticated: boolean;
-        username: string;
-        email: string;
-        role: string[]
-    }
+    token: string;
 }
 
-export const Login = () => {
+interface TokenClaims {
+    username: string;
+    email: string;
+    role: string[],
+    iat: number;
+    exp: number;
+}
+
+export const LoginJWT = () => {
 
     const navigate = useNavigate();
     const user = useSelector((state: RootState) => state.user)
     const dispatch = useDispatch();
-    const { loginWithRedirect } = useAuth0();
+
 
     const [form, setForm] = useState({
         username: '',
@@ -36,12 +40,13 @@ export const Login = () => {
             [event.target.name]: event.target.value
         })
     }
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+
         event.preventDefault();
-        
         const passwordEncriptado = Md5.hashStr(form.password);
 
-        fetch('http://localhost:3001/login', {
+        fetch('http://localhost:3001/auth/login', {
             method: 'POST',
             body: JSON.stringify({
                 "username": form.username,
@@ -57,12 +62,14 @@ export const Login = () => {
             throw new Error('Error en la llamada http, no fue ok');
         }).then(json => {
 
-            console.log(json);
+            localStorage.setItem('token', json.token);
+            const decodedToken = jwtDecode<TokenClaims>(json.token);
+
             dispatch(login({
-                username: json.metadata.username,
-                email: json.metadata.email,
-                isAuth: json.metadata.isAuthenticated,
-                role: json.metadata.role
+                username: decodedToken.username,
+                email: decodedToken.email,
+                isAuth: true,
+                role: decodedToken.role,
             }))
             //que navegue a la ruta que se intento navegar pero estaba protegida
             navigate(-1);
@@ -70,15 +77,15 @@ export const Login = () => {
         }).catch(error => {
             console.log(error);
             dispatch(logout());
+            localStorage.removeItem('token');
         });
     }
-
     return (
         <div>
             {!user?.isAuth &&
                 <div>
                     <div>
-                        <h2>Autenticar con backend (base de datos)</h2>
+                        <h2>Autenticar con backend (jwt)</h2>
                         <form onSubmit={handleSubmit}>
                             <label>
                                 <p>Username</p>
@@ -92,10 +99,6 @@ export const Login = () => {
                                 <button type="submit">Login</button>
                             </div>
                         </form>
-                    </div>
-                    <div>
-                        <h3>Autenticar con auth0</h3>
-                        <button type="button" onClick={() => loginWithRedirect()}>Autenticar</button>
                     </div>
                 </div>
             }

@@ -16,5 +16,5 @@ export const ProtectedComponent = (props: Props) => {
     return user?.isAuth && props.allowedRoles.filter(rol => user?.role.includes(rol)).length > 0 ?
         (props.children)
         :
-        <Navigate to='/login' state={{ from: location }} replace />
+        <Navigate to='/login-jwt' state={{ from: location }} replace />
 }

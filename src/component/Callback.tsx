@@ -29,7 +29,7 @@ export const Callback = () => {
             <p>nickname {user?.nickname}</p>
             <p>email {user?.email}</p>
             <p>profile {user?.profile}</p>
-            <p>token{token}</p>
+            <p>token {token}</p>
 
             token
 

@@ -6,6 +6,8 @@ import { Login } from './component/Login';
 import { Home } from './component/Home';
 import { ProtectedComponent } from './component/ProtectedRoute';
 import { Callback } from './component/Callback';
+import { LoginJWT } from './component/LoginJWT';
+import { Hello } from './component/Hello';
 
 function App() {
 
@@ -13,10 +15,11 @@ function App() {
     <>
       <p>Bienvenido!</p>
       <ul>
-        <li><Link to='login'>Login</Link></li>
+        <li><Link to='login-jwt'>Login</Link></li>
         <li><Link to='/'>Home</Link></li>
         <li><Link to='heroes'>Heroes</Link></li>
         <li><Link to='crud'>Crud</Link></li>
+        <li><Link to='hello'>Hello</Link></li>
       </ul>
 
       <Routes>
@@ -28,7 +31,9 @@ function App() {
         } />
         <Route path='crud' element={<HeroesPreferidos />} />
         <Route path='login' element={<Login />} />
+        <Route path='login-jwt' element={<LoginJWT />} />
         <Route path='callback' element={<Callback />} />
+        <Route path='hello' element={<Hello />} />
       </Routes>
 
 
