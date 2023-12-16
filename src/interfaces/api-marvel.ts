@@ -182,3 +182,22 @@ export interface CharacterSummary {
     name?: string;// The full name of the character.,
     role?: string;// The role of the creator in the parent entity.
 }
+
+export interface Persona {
+    nombre: string;
+    edad: number;
+    direccion: Direccion
+}
+
+export interface Direccion {
+    calle: string;
+    numeroCalle: number;
+    ciudad: string;
+}
+
+export interface Bodega {
+    codigo: string;
+    nombre: string;
+    encargado: Persona;
+    direccion: Direccion;
+}

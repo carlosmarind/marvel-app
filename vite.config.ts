@@ -7,6 +7,5 @@ export default defineConfig({
   plugins: [react(), mkcert()],
   server: {
     https: true,
-    host: 'pruebas.marvel.com',
   },
 })

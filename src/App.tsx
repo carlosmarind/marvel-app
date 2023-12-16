@@ -4,7 +4,6 @@ import { SearchCharacter } from './component/SearchCharacter';
 import { Link } from 'react-router-dom';
 import { Login } from './component/Login';
 import { Home } from './component/Home';
-import { ProtectedComponent } from './component/ProtectedRoute';
 import { Callback } from './component/Callback';
 import { LoginJWT } from './component/LoginJWT';
 import { Hello } from './component/Hello';
@@ -25,9 +24,9 @@ function App() {
       <Routes>
         <Route path='/' element={<Home />} />
         <Route path='heroes' element={
-          <ProtectedComponent allowedRoles={["admin", "admin-search", "user-search"]}>
-            <SearchCharacter />
-          </ProtectedComponent>
+
+          <SearchCharacter />
+
         } />
         <Route path='crud' element={<HeroesPreferidos />} />
         <Route path='login' element={<Login />} />
