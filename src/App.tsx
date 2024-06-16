@@ -15,14 +15,14 @@ function App() {
       <p>Bienvenido!</p>
       <ul>
         <li><Link to='login-jwt'>Login</Link></li>
-        <li><Link to='/'>Home</Link></li>
+        <li><Link to='/*'>Home</Link></li>
         <li><Link to='heroes'>Heroes</Link></li>
         <li><Link to='crud'>Crud</Link></li>
         <li><Link to='hello'>Hello</Link></li>
       </ul>
 
       <Routes>
-        <Route path='/' element={<Home />} />
+        <Route path='/*' element={<Home />} />
         <Route path='heroes' element={
 
           <SearchCharacter />

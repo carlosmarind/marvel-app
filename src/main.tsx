@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './main.css'
-import { BrowserRouter } from 'react-router-dom'
+import { HashRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { store } from './redux/store.ts'
 import { Auth0Provider } from '@auth0/auth0-react'
@@ -16,9 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         authorizationParams={{
           redirect_uri: import.meta.env.VITE_REACT_APP_AUTH0_CALLBACK_URL
         }}>
-        <BrowserRouter>
+        <HashRouter>
           <App />
-        </BrowserRouter>
+        </HashRouter>
       </Auth0Provider>
     </Provider>
   </React.StrictMode>,
